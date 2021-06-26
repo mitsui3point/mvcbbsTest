@@ -43,7 +43,7 @@ public class BoardController {
 	private UserService userService;
 	
 	/**
-	 * 상수풀
+	 * 상수풀	
 	 */
 	private static final String BOARD_LIST = "board/list";
 	private static final String BOARD_WRITE = "board/write";
