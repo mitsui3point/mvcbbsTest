@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvcbbs.user.regist.impl.hibernate.UserHibernateDAO">
+	<!-- 기존회원과 이메일 중복체크 -->
+	<select id="selectByEmail" resultType="userVO" parameterType="java.lang.String">
+		<![CDATA[
+			SELECT	USR.IDX AS idx 
+				,	USR.ID AS id
+				,	USR.EMAIL AS email
+				,	USR.NAME AS name
+				,	USR.PASSWORD AS password
+				,	USR.GRADE AS grade
+				,	USR.REGDATE AS regdate
+			  FROM	USER USR
+			 WHERE	USR.EMAIL = #{email}
+		]]>
+	</select>
+	
+	<!-- 기존회원과 id 중복체크 -->
+	<select id="selectById" resultType="userVO" parameterType="java.lang.String">
+		<![CDATA[
+			SELECT	USR.IDX AS idx 
+				,	USR.ID AS id
+				,	USR.EMAIL AS email
+				,	USR.NAME AS name
+				,	USR.PASSWORD AS password
+				,	USR.GRADE AS grade
+				,	USR.REGDATE AS regdate
+			  FROM	USER USR
+			 WHERE	USR.ID = #{id}
+		]]>
+	</select>
+	
+	<!-- 회원등록 -->
+	<insert id="insertUser" parameterType="registerRequestHibernateVO">
+		<![CDATA[
+			INSERT INTO USER 
+						(	ID
+						,	EMAIL
+						,	NAME
+						,	PASSWORD
+						,	REGDATE
+						)
+				 VALUES (	#{id}
+						,	#{email}
+						,	#{name}
+						,	#{pw}
+						,	SYSDATE()
+						)
+		]]>
+	</insert>
+</mapper>

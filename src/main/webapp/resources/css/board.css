@@ -1,0 +1,8 @@
+@charset "UTF-8";
+/* board */
+table {border: 1px solid; margin:0 auto;}
+tbody tr td{text-align:center;}
+.contents {width:800px;margin:0 auto;overflow:hidden;}
+.contents .btn-area {float:right;}
+/* paging */
+.paging-area ul li{display:inline;}

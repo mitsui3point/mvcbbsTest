@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+	<!--
+		interceptor-servlet.xml을 따로 만들지 않고 action-servlet.xml에 추가해도 상관없다. 
+		다만 Interceptor가 DispatcherSevlet과 같은 위치에 등록되어야 된다는 것만 유의하자. 
+		action-servlet.xml에 추가하는 것도 같은 위치에 등록한 것이고, 
+			action-servlet.xml과 같은 폴더인 appServlet에 interceptor-servlet.xml을 만들어서 추가하는 것도 같은 위치에 등록한 것이다. 
+		web.xml에 가면 알 수 있을 것이다.
+	-->
+	<interceptors>
+		<interceptor>
+			<!-- 
+				예외 URL(exclude-mapping)을 제외한 모든 URL에 적용하고 싶을때 /** 를 쓰면 된다. 
+				특정 URL을 쓰고싶으면 URL을 적으면 된다. 
+				지금 우리가 사용할 것은 모든 Logger에 적용되야 하기에 /** 를 썼다.
+			-->
+			<mapping path="/**"/>
+			<beans:bean id="commonInterceptor" class="com.mvcbbs.common.interceptor.CommonInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<beans:bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	<!-- https://javafactory.tistory.com/1118 -->
+	<beans:bean id="jsonMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<beans:property name="objectMapper" ref="jsonMapper"/>
+	</beans:bean>
+	
+</beans:beans>
